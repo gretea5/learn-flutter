@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toonflix/widgets/button.dart';
 
 void main() {
   runApp(const App());
@@ -9,20 +10,20 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
-        backgroundColor: const Color(0xFF181818),
+        backgroundColor: Color(0xFF181818),
         body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 40,
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 80,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Column(
@@ -47,22 +48,20 @@ class App extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(
+              SizedBox(
                 height: 120,
               ),
-              Container(
-                child: const Text(
-                  'Total Blance',
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Color.fromRGBO(255, 255, 255, 0.8),
-                  ),
+              Text(
+                'Total Blance',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Color.fromRGBO(255, 255, 255, 0.8),
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
-              const Text(
+              Text(
                 '\$5 194 142',
                 style: TextStyle(
                   color: Colors.white,
@@ -70,28 +69,22 @@ class App extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 30,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                      decoration: BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.circular(45),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 50,
-                        ),
-                        child: Text(
-                          'Transfer',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      )),
+                  Button(
+                    text: 'Transfer',
+                    bgColor: Color(0xFFF1B33B),
+                    textColor: Colors.black,
+                  ),
+                  Button(
+                    text: 'Request',
+                    bgColor: Color(0xFF1F2123),
+                    textColor: Colors.white,
+                  ),
                 ],
               ),
             ],
