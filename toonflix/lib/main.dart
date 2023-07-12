@@ -31,7 +31,7 @@ class App extends StatelessWidget {
                       Text(
                         'Hey, Selena',
                         style: TextStyle(
-                          color: Colors.amber,
+                          color: Colors.white,
                           fontSize: 28,
                           fontWeight: FontWeight.w800,
                         ),
@@ -50,11 +50,13 @@ class App extends StatelessWidget {
               const SizedBox(
                 height: 120,
               ),
-              const Text(
-                'Total Blance',
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Color.fromRGBO(255, 255, 255, 0.8),
+              Container(
+                child: const Text(
+                  'Total Blance',
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Color.fromRGBO(255, 255, 255, 0.8),
+                  ),
                 ),
               ),
               const SizedBox(
