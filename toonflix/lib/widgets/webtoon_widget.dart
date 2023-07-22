@@ -15,15 +15,16 @@ class Webtoon extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DetailScreen(
-                title: title,
-                id: id,
-                thumb: thumb,
-              ),
-              fullscreenDialog: true,
-            ));
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              title: title,
+              id: id,
+              thumb: thumb,
+            ),
+            fullscreenDialog: true,
+          ),
+        );
       },
       child: Column(
         children: [
