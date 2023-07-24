@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:toonflix/screens/home_screen.dart';
 import 'package:toonflix/services/api_service.dart';
 
-// 방법 2. (global override)
-// [main.dart]
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
