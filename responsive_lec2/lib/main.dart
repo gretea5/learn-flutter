@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_lec/mypage.dart';
+import 'package:responsive_lec2/my_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,13 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
-          textTheme: const TextTheme(
-              bodyMedium: TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-          ))),
+        primarySwatch: Colors.deepPurple,
+      ),
       home: const MyPage(),
     );
   }
