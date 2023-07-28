@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:toonflix/screens/home_screen.dart';
-import 'package:toonflix/services/api_service.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -15,7 +14,6 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  ApiService.getToonById("790713");
   runApp(const App());
 }
 
