@@ -11,12 +11,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Map<String, String>> datas = [];
-  late int currentPageIndex;
-
+  late String currentLocation;
+  final Map<String, String> locationTypeToString = {
+    "ara": "아라동",
+    "ora": "오라동",
+    "donam": "도남동"
+  };
   @override
   void initState() {
     super.initState();
-    currentPageIndex = 0;
+    currentLocation = "ara";
     datas = [
       {
         "image": "assets/images/ara-1.jpg",
@@ -91,6 +95,12 @@ class _HomeState extends State<Home> {
     ];
   }
 
+  final oCcy = NumberFormat("#,###", "ko_KR");
+  String calcStringToWon(String priceString) {
+    oCcy.format(int.parse(priceString));
+    return "${oCcy.format(int.parse(priceString))}원";
+  }
+
   PreferredSizeWidget _appbarWidget() {
     return AppBar(
       elevation: 1,
@@ -101,13 +111,41 @@ class _HomeState extends State<Home> {
         onLongPress: () {
           print("long pressed");
         },
-        child: const Row(
-          children: [
-            Text(
-              "아라동",
-            ),
-            Icon(Icons.arrow_drop_down),
-          ],
+        child: PopupMenuButton<String>(
+          offset: const Offset(0, 25),
+          shape: ShapeBorder.lerp(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            1,
+          ),
+          onSelected: (String where) {
+            print(where);
+            setState(() {
+              currentLocation = where;
+            });
+          },
+          itemBuilder: (BuildContext context) {
+            return [
+              const PopupMenuItem(
+                value: "ara",
+                child: Text("아라동"),
+              ),
+              const PopupMenuItem(
+                value: "ora",
+                child: Text("오라동"),
+              ),
+              const PopupMenuItem(
+                value: "donam",
+                child: Text("도남동"),
+              )
+            ];
+          },
+          child: Row(
+            children: [
+              Text("${locationTypeToString[currentLocation]}"),
+              const Icon(Icons.arrow_drop_down),
+            ],
+          ),
         ),
       ),
       actions: [
@@ -128,12 +166,6 @@ class _HomeState extends State<Home> {
         ),
       ],
     );
-  }
-
-  final oCcy = NumberFormat("#,###", "ko_KR");
-  String calcStringToWon(String priceString) {
-    oCcy.format(int.parse(priceString));
-    return "${oCcy.format(int.parse(priceString))}원";
   }
 
   Widget _bodyWidget() {
@@ -219,48 +251,12 @@ class _HomeState extends State<Home> {
     );
   }
 
-  BottomNavigationBarItem _bottomNavigationBarItem(
-      String iconName, String label) {
-    return BottomNavigationBarItem(
-        icon: Padding(
-          padding: const EdgeInsets.only(
-            bottom: 3,
-          ),
-          child: SvgPicture.asset(
-            "assets/svg/${iconName}_off.svg",
-            width: 22,
-          ),
-        ),
-        label: label);
-  }
-
-  Widget _bottomNavigationBarWidget() {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      onTap: (int index) {
-        setState(() {
-          currentPageIndex = index;
-        });
-      },
-      currentIndex: currentPageIndex,
-      selectedItemColor: Colors.black,
-      selectedFontSize: 12,
-      items: [
-        _bottomNavigationBarItem("home", "홈"),
-        _bottomNavigationBarItem("notes", "동네생활"),
-        _bottomNavigationBarItem("location", "내 근처"),
-        _bottomNavigationBarItem("chat", "채팅"),
-        _bottomNavigationBarItem("user", "나의 당근"),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appbarWidget(),
       body: _bodyWidget(),
-      bottomNavigationBar: _bottomNavigationBarWidget(),
     );
+    //
   }
 }
