@@ -1,34 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
+import 'package:weather_app/model/model.dart';
 
 class WeatherScreen extends StatefulWidget {
   final parseWeatherData;
-  const WeatherScreen({super.key, this.parseWeatherData});
+  final parseAirData;
+  const WeatherScreen(
+      {super.key, required this.parseWeatherData, required this.parseAirData});
 
   @override
   State<WeatherScreen> createState() => _WeatherScreenState();
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  //날씨
   late String cityName;
   late int temp;
+  late String description;
+  late Widget weatherIcon;
+
+  //대기
+  late Widget mainAQIDescription;
+  late Widget mainAQIIcon;
+  late double fineDust;
+  late double coarseDust;
+
   var date = DateTime.now();
   @override
   void initState() {
     super.initState();
-    updateData(widget.parseWeatherData);
+    updateData(widget.parseWeatherData, widget.parseAirData);
   }
 
-  void updateData(dynamic weatherData) {
-    double temp2 = weatherData["main"]["temp"];
+  void updateData(dynamic weatherData, dynamic airData) {
+    dynamic temp2 = weatherData["main"]["temp"];
     temp = temp2.round();
-    print(temp);
-
     cityName = weatherData['name'];
-    print(cityName);
+    description = weatherData['weather'][0]['description'];
+    fineDust = airData["list"][0]["components"]["pm2_5"];
+    coarseDust = airData["list"][0]["components"]["pm10"];
+    int aqiNumber = airData["list"][0]["main"]["aqi"];
+    int weatherId = weatherData['weather'][0]['id'];
+    Model model = Model();
+    mainAQIDescription = model.getAQIDescription(aqiNumber);
+    mainAQIIcon = model.getAQIWidget(aqiNumber);
+    weatherIcon = model.getWeatherIcon(weatherId);
   }
 
   String getSystemTime() {
@@ -82,7 +100,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               height: 150,
                             ),
                             Text(
-                              'Seoul',
+                              cityName,
                               style: GoogleFonts.lato(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 35.0,
@@ -126,7 +144,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '18\u2103',
+                              '$temp\u2103',
                               style: GoogleFonts.lato(
                                 fontWeight: FontWeight.w300,
                                 fontSize: 85.0,
@@ -135,12 +153,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             ),
                             Row(
                               children: [
-                                SvgPicture.asset('svg/climacon-sun.svg'),
+                                weatherIcon,
                                 const SizedBox(
                                   width: 10.0,
                                 ),
                                 Text(
-                                  'clear sky',
+                                  description,
                                   style: GoogleFonts.lato(
                                     fontSize: 16.0,
                                     color: Colors.white,
@@ -175,22 +193,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              Image.asset(
-                                'image/bad.png',
-                                width: 37.0,
-                                height: 35.0,
-                              ),
+                              mainAQIIcon,
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              Text(
-                                '"매우나쁨"',
-                                style: GoogleFonts.lato(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.0,
-                                  color: Colors.black87,
-                                ),
-                              ),
+                              mainAQIDescription,
                             ],
                           ),
                           Column(
@@ -206,7 +213,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 height: 10.0,
                               ),
                               Text(
-                                '174.75',
+                                '$fineDust',
                                 style: GoogleFonts.lato(
                                   fontSize: 24.0,
                                   color: Colors.white,
@@ -238,7 +245,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 height: 10.0,
                               ),
                               Text(
-                                '84.03',
+                                '$coarseDust',
                                 style: GoogleFonts.lato(
                                   fontSize: 24.0,
                                   color: Colors.white,

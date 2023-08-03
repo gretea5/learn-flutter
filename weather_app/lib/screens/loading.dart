@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/data/my_location.dart';
 import 'package:weather_app/data/network.dart';
 import 'package:weather_app/screens/weather_screen.dart';
@@ -28,27 +29,48 @@ class _LoadingState extends State<Loading> {
     longitude3 = myLocation.longitude2;
     print("현재 위도 경도 : $latitude3, $longitude3");
     Network network = Network(
-      url:
-          "https://api.openweathermap.org/data/2.5/weather?lat=$latitude3&lon=$longitude3&appid=$apikey&units=metric",
-    );
+        url:
+            "https://api.openweathermap.org/data/2.5/weather?lat=$latitude3&lon=$longitude3&appid=$apikey&units=metric",
+        url2:
+            "http://api.openweathermap.org/data/2.5/air_pollution?lat=$latitude3&lon=$longitude3&appid=$apikey");
     var weatherData = await network.getJsonData();
+    var airData = await network.getAirData();
     print(weatherData);
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return WeatherScreen(
-        parseWeatherData: weatherData,
-      );
-    }));
+    print(airData);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return WeatherScreen(
+            parseWeatherData: weatherData,
+            parseAirData: airData,
+          );
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        // child: ElevatedButton(
-        //   onPressed: null,
-        //   child: Text("Get my Location"),
-        // ),
-        child: CircularProgressIndicator(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Loading...',
+              style: GoogleFonts.lato(
+                fontWeight: FontWeight.w400,
+                fontSize: 35.0,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const CircularProgressIndicator(),
+          ],
+        ),
       ),
     );
   }
