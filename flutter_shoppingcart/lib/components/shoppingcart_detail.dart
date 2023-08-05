@@ -52,31 +52,97 @@ class ShoppingCartDetail extends StatelessWidget {
   }
 
   Widget _buildRatingAndReviewCount() {
-    return const Row(
-      children: [
-        Icon(Icons.star, color: Colors.yellow),
-        Icon(Icons.star, color: Colors.yellow),
-        Icon(Icons.star, color: Colors.yellow),
-        Icon(Icons.star, color: Colors.yellow),
-        Icon(Icons.star, color: Colors.yellow),
-        Spacer(),
-        Text("review "),
-        Text(
-          "(26)",
-          style: TextStyle(
-            color: Colors.blue,
+    return const Padding(
+      padding: EdgeInsets.only(
+        bottom: 20.0,
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.star, color: Colors.yellow),
+          Icon(Icons.star, color: Colors.yellow),
+          Icon(Icons.star, color: Colors.yellow),
+          Icon(Icons.star, color: Colors.yellow),
+          Icon(Icons.star, color: Colors.yellow),
+          Spacer(),
+          Text("review "),
+          Text(
+            "(26)",
+            style: TextStyle(
+              color: Colors.blue,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _buildDetailColorOptions() {
-    return const SizedBox();
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 20.0,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("Color Options"),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              _buildDetailIcons(
+                Colors.black,
+              ),
+              _buildDetailIcons(
+                Colors.green,
+              ),
+              _buildDetailIcons(
+                Colors.orange,
+              ),
+              _buildDetailIcons(
+                Colors.grey,
+              ),
+              _buildDetailIcons(
+                Colors.white,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
-  Widget _buildDetailIcons() {
-    return const SizedBox();
+  // Stack
+  Widget _buildDetailIcons(Color mColor) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: 10,
+      ),
+      child: Stack(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(),
+              shape: BoxShape.circle,
+            ),
+          ),
+          Positioned(
+            left: 5,
+            top: 5,
+            child: ClipOval(
+              child: Container(
+                width: 40,
+                height: 40,
+                color: mColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildDetailButton() {
