@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shoppingcart/components/shoppingcart_detail.dart';
 import 'package:flutter_shoppingcart/components/shoppingcart_header.dart';
+import 'package:flutter_shoppingcart/constants.dart';
 import 'package:flutter_shoppingcart/theme.dart';
 
 void main() {
@@ -36,5 +37,28 @@ class ShoppingCartPage extends StatelessWidget {
     );
   }
 
-  AppBar _buildShoppingCartAppBar() => AppBar();
+  AppBar _buildShoppingCartAppBar() => AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: kPrimaryColor,
+        elevation: 0.0,
+        leading: IconButton(
+          onPressed: () {
+            print("클릭됨");
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              print("클릭됨");
+            },
+            icon: const Icon(
+              Icons.shopping_cart,
+            ),
+          ),
+          const SizedBox(
+            width: 16.0,
+          ),
+        ],
+      );
 }
