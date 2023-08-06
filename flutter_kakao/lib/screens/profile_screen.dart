@@ -22,40 +22,90 @@ class ProfileScreen extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              FontAwesomeIcons.xmark,
-              size: 30,
-              color: Colors.white,
-            ),
-          ),
-          actions: const [
-            RoundIconButton(
-              icon: FontAwesomeIcons.gift,
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            RoundIconButton(
-              icon: FontAwesomeIcons.gear,
-            ),
-            SizedBox(
-              width: 20,
-            ),
-          ],
-        ),
+        appBar: _buildAppBar(context),
         body: Column(
           children: [
             const Spacer(),
+            _buildMainStory(),
             user.name == me.name ? _buildMyIcons() : _buildFriendIcons(),
           ],
         ),
       ),
+    );
+  }
+
+  Column _buildMainStory() {
+    return Column(
+      children: [
+        Container(
+          width: 110,
+          height: 110,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: NetworkImage(user.backgroundImage),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        Text(
+          user.name,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          user.intro,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+          ),
+          maxLines: 1,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Divider(
+          color: Colors.white,
+        ),
+      ],
+    );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(
+          FontAwesomeIcons.xmark,
+          size: 30,
+          color: Colors.white,
+        ),
+      ),
+      actions: const [
+        RoundIconButton(
+          icon: FontAwesomeIcons.gift,
+        ),
+        SizedBox(
+          width: 15,
+        ),
+        RoundIconButton(
+          icon: FontAwesomeIcons.gear,
+        ),
+        SizedBox(
+          width: 20,
+        ),
+      ],
     );
   }
 
