@@ -1,13 +1,13 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:webtoon_app/models/webtoon_model.dart';
 
 class APiService {
-  final String baseURL = "https://webtoon-crawler.nomadcoders.workers.dev";
-  final String today = "today";
+  static const String baseURL =
+      "https://webtoon-crawler.nomadcoders.workers.dev";
+  static const String today = "today";
 
-  Future<List<WebtoonModel>> getTodaysToons() async {
+  static Future<List<WebtoonModel>> getTodaysToons() async {
     final List<WebtoonModel> webtoonInstances = [];
     final url = Uri.parse('$baseURL/$today');
     final response = await http.get(url);
@@ -17,7 +17,6 @@ class APiService {
         final toon = WebtoonModel.fromJson(webtoon);
         webtoonInstances.add(toon);
       }
-      print(webtoonInstances);
       return webtoonInstances;
     }
     throw Error();
