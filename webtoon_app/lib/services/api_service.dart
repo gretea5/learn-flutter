@@ -42,8 +42,7 @@ class APiService {
     if (response.statusCode == 200) {
       final List<dynamic> episodes = jsonDecode(response.body);
       for (var episode in episodes) {
-        final toon = WebtoonEpisodeModel.fromJson(episode);
-        episodeInstances.add(toon);
+        episodeInstances.add(WebtoonEpisodeModel.fromJson(episode));
       }
       return episodeInstances;
     }
